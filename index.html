@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radency_task-1</title>
+  <link rel="stylesheet" href="./styles/style.css">
+  <script type="module" src="./js/index.js" defer></script>
+</head>
+<body>
+  <main class="main">
+    <div class="main__content">
+      <table class="notes-table main__notes-table">
+        <tr class="notes-table__head">
+          <th class="cell notes-table__cell cell--is-centered">Name</th>
+          <th class="cell notes-table__cell">Created</th>
+          <th class="cell notes-table__cell">Category</th>
+          <th class="cell notes-table__cell">Content</th>
+          <th class="cell notes-table__cell">Dates</th>
+          <th class="cell notes-table__cell cell--with-icons">
+            <span 
+              class="icon cell__icon icon--is-big icon--archive-white" 
+              id="archive"
+            >
+              Arcive
+            </span>
+            <span 
+              class="icon nocell__icon icon--is-big icon--delete-white"
+              id="delete"
+            >
+              Delete
+            </span>
+          </th>
+        </tr>
+        <tbody class="notes-table__body" id="notes-table-body" data-active="true"></tbody>
+      </table>
+      <button type="button" class="create-note-button main__create-note-button">Create Note</button>
+      <!-- <div class="notes-table main__notes-table notes-table--full-width">
+        <ul class="notes-table__head">
+          <li class="cell notes-table__cell cell--is-centered">Note category</li>
+          <li class="cell notes-table__cell">Active</li>
+          <li class="cell notes-table__cell">Archived</li>
+        </ul>
+        <ul class="note notes-table__note">
+          <li class="cell note__cell cell--is-darken cell--is-big">
+            <span class="icon-wrapper cell__icon-wrapper">
+              <span class="icon icon--cart">Cart</span>
+            </span>
+            <h3 class="cell__title">
+              Task
+            </h3>
+          </li>
+          <li class="cell note__cell cell--active">0</li>
+          <li class="cell note__cell cell--archived">0</li>
+        </ul>
+        <ul class="note notes-table__note">
+          <li class="cell note__cell cell--is-darken cell--is-big">
+            <span class="icon-wrapper cell__icon-wrapper">
+              <span class="icon icon--thought">Thought</span>
+            </span>
+            <h3 class="cell__title">
+              Random thought
+            </h3>
+          </li>
+          <li class="cell note__cell cell--active">0</li>
+          <li class="cell note__cell cell--archived">0</li>
+        </ul>
+        <ul class="note notes-table__note">
+          <li class="cell note__cell cell--is-darken cell--is-big">
+            <span class="icon-wrapper cell__icon-wrapper">
+              <span class="icon icon--idea">Idea</span>
+            </span>
+            <h3 class="cell__title">
+              Idea
+            </h3>
+          </li>
+          <li class="cell note__cell cell--active">0</li>
+          <li class="cell note__cell cell--archived">0</li>
+        </ul>
+        <ul class="note notes-table__note">
+          <li class="cell note__cell cell--is-darken cell--is-big">
+            <span class="icon-wrapper cell__icon-wrapper">
+              <span class="icon icon--quote">Cart</span>
+            </span>
+            <h3 class="cell__title">
+              Quote
+            </h3>
+          </li>
+          <li class="cell note__cell cell--active">0</li>
+          <li class="cell note__cell cell--archived">0</li>
+        </ul>
+      </div> -->
+    </div>
+  </main>
+</body>
+</html>
