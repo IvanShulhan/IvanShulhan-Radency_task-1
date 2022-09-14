@@ -66,6 +66,14 @@
   width: 95%;
 }
 
+.cell--full-size {
+  overflow: visible;
+}
+
+.cell--full-size .cell__title {
+  overflow: visible;
+}
+
 .cell--is-centered {
   justify-content: center;
 }

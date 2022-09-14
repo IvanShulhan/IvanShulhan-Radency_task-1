@@ -1,5 +1,11 @@
-import { notes } from './data.js';
-import {createCell, createCellWithText, createTitleCell, createButton} from './utils.js'
+import { notes, categories } from './data.js';
+import {
+  createRow,
+  createCell, 
+  createCellWithText, 
+  createTitleCell, 
+  createButton
+} from './utils.js'
 
 export const store = {
   notes,
@@ -13,6 +19,7 @@ const createNoteButton = document.querySelector('#create');
 const name = form.querySelector('#name');
 const category = form.querySelector('#category');
 const content = form.querySelector('#content');
+const statisticTable = document.querySelector('#statistic-table');
 
 mainContent.append(form);
 
@@ -22,17 +29,39 @@ showArchivedNotesButton.addEventListener('click', () => {
   updateTables()
 });
 
+function updateStatisticTableContent() {
+  statisticTable.innerHTML = '';
+
+  Object.keys(categories).forEach((category) => {
+    const filtered = store.notes.filter(note => note.category === category)
+    const active = filtered.filter(note => note.isArchived).length || '0';
+    const archive = filtered.length - active || '0';
+
+
+    const row = createRow();
+    const titleCell = createTitleCell(category);
+    titleCell.classList.add('cell--full-size');
+    const activeCell = createCell(active);
+    const archiveCell = createCell(archive);
+
+    row.append(titleCell, activeCell, archiveCell);
+    statisticTable.append(row);
+  })
+}
+
+
 createNoteButton.addEventListener('click', () => {
   form.classList.toggle('form--is-visible');
 })
 
-export function updateTables() {
+function updateTables() {
   const filteredNotes = tableBody.dataset.active === 'true' 
     ? store.notes.filter(item => !item.isArchived)
     : store.notes.filter(item => item.isArchived);
 
   tableBody.innerHTML = '';
   filteredNotes.forEach(render);
+  updateStatisticTableContent();
 }
 
 function filterNotesById(id) {
@@ -40,14 +69,12 @@ function filterNotesById(id) {
 }
 
 function createRowContent(row, note) {
-  row.dataset.id = note.id;
-
   Object.keys(note)
     .filter((key) => key !== 'id')
     .forEach((key) => {
       switch (key) {
         case 'name':
-          const titleCell = createTitleCell(note);
+          const titleCell = createTitleCell(note.category, note.name);
           row.appendChild(titleCell);
           break;
         case 'isArchived': 
@@ -63,12 +90,6 @@ function createRowContent(row, note) {
           row.appendChild(cell);
       }
   })
-};
-
-function createRow() {
-  const row = document.createElement('tr');
-  row.className = 'note notes-table__note';
-  return row;
 };
 
 function createCellWithButtons(note) {
@@ -116,8 +137,9 @@ function render(note) {
   tableBody.append(row);
 };
 
-function initTable() {
+function initTables() {
   notes.forEach(render);
+  updateStatisticTableContent();
 }
 
 form.addEventListener('submit', (event) => {
@@ -173,4 +195,8 @@ function getDates(content) {
   return content.match(reg)?.join(', ')
 };
 
-initTable();
+function getStatistic() {
+  statisticTable
+}
+
+initTables();

@@ -5,7 +5,7 @@ export function createCell(value) {
   cell.className = 'cell note__cell';
 
   if (value) {
-    cell.textContent = value;
+    cell.innerText = value;
   }
   
   return cell;
@@ -22,21 +22,27 @@ export function createCellWithText(value) {
   return cell;
 };
 
-export function createTitleCell(note) {
+export function createRow() {
+  const row = document.createElement('tr');
+  row.className = 'note notes-table__note';
+  return row;
+};
+
+export function createTitleCell(category, name) {
   const cell = createCell();
   cell.classList.add('cell--is-darken');
   
   const title = document.createElement('h3');
   title.className = 'cell__title';
-  title.textContent = note.name;
+  title.textContent = name || category;
 
   const iconBox = document.createElement('span');
   iconBox.className = 'icon-wrapper cell__icon-wrapper';
 
   const icon = document.createElement('span');
-  icon.className = `icon icon--${categories[note.category]}`;
+  icon.className = `icon icon--${categories[category]}`;
   icon.style.cursor = 'auto';
-  icon.textContent = note.category;
+  icon.textContent = category;
 
   iconBox.appendChild(icon);
   cell.append(iconBox, title);

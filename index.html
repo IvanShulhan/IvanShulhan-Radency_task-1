@@ -95,61 +95,16 @@
       >
         Create Note
       </button>
-      <!-- <div class="notes-table main__notes-table notes-table--full-width">
-        <ul class="notes-table__head">
-          <li class="cell notes-table__cell cell--is-centered">Note category</li>
-          <li class="cell notes-table__cell">Active</li>
-          <li class="cell notes-table__cell">Archived</li>
-        </ul>
-        <ul class="note notes-table__note">
-          <li class="cell note__cell cell--is-darken cell--is-big">
-            <span class="icon-wrapper cell__icon-wrapper">
-              <span class="icon icon--cart">Cart</span>
-            </span>
-            <h3 class="cell__title">
-              Task
-            </h3>
-          </li>
-          <li class="cell note__cell cell--active">0</li>
-          <li class="cell note__cell cell--archived">0</li>
-        </ul>
-        <ul class="note notes-table__note">
-          <li class="cell note__cell cell--is-darken cell--is-big">
-            <span class="icon-wrapper cell__icon-wrapper">
-              <span class="icon icon--thought">Thought</span>
-            </span>
-            <h3 class="cell__title">
-              Random thought
-            </h3>
-          </li>
-          <li class="cell note__cell cell--active">0</li>
-          <li class="cell note__cell cell--archived">0</li>
-        </ul>
-        <ul class="note notes-table__note">
-          <li class="cell note__cell cell--is-darken cell--is-big">
-            <span class="icon-wrapper cell__icon-wrapper">
-              <span class="icon icon--idea">Idea</span>
-            </span>
-            <h3 class="cell__title">
-              Idea
-            </h3>
-          </li>
-          <li class="cell note__cell cell--active">0</li>
-          <li class="cell note__cell cell--archived">0</li>
-        </ul>
-        <ul class="note notes-table__note">
-          <li class="cell note__cell cell--is-darken cell--is-big">
-            <span class="icon-wrapper cell__icon-wrapper">
-              <span class="icon icon--quote">Cart</span>
-            </span>
-            <h3 class="cell__title">
-              Quote
-            </h3>
-          </li>
-          <li class="cell note__cell cell--active">0</li>
-          <li class="cell note__cell cell--archived">0</li>
-        </ul>
-      </div> -->
+      <table 
+        class="notes-table main__notes-table notes-table--full-width" 
+      >
+        <tr class="notes-table__head">
+          <th class="cell notes-table__cell cell--is-centered">Note category</th>
+          <th class="cell notes-table__cell">Active</th>
+          <th class="cell notes-table__cell">Archived</th>
+        </tr>
+        <tbody id="statistic-table"></tbody>
+      </table>
     </div>
   </main>
 </body>
