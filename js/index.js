@@ -1,15 +1,19 @@
-import { notes, categories } from './data.js';
-import { createForm } from './utils.js';
+import { notes } from './data.js';
+import {createCell, createCellWithText, createTitleCell, createButton} from './utils.js'
 
-const store = {
+export const store = {
   notes,
 };
 
 const mainContent = document.querySelector('.main__content');
 const tableBody = document.querySelector('#notes-table-body');
 const showArchivedNotesButton = document.querySelector('#archive');
+const form = document.querySelector('#form');
+const createNoteButton = document.querySelector('#create');
+const name = form.querySelector('#name');
+const category = form.querySelector('#category');
+const content = form.querySelector('#content');
 
-const form = createForm();
 mainContent.append(form);
 
 showArchivedNotesButton.addEventListener('click', () => {
@@ -18,18 +22,26 @@ showArchivedNotesButton.addEventListener('click', () => {
   updateTables()
 });
 
-function render(note) {
-  const row = createRow();
-  createRowContent(row, note);
+createNoteButton.addEventListener('click', () => {
+  form.classList.toggle('form--is-visible');
+})
 
-  tableBody.append(row);
-};
+export function updateTables() {
+  const filteredNotes = tableBody.dataset.active === 'true' 
+    ? store.notes.filter(item => !item.isArchived)
+    : store.notes.filter(item => item.isArchived);
 
-function initTable() {
-  notes.forEach(render);
+  tableBody.innerHTML = '';
+  filteredNotes.forEach(render);
+}
+
+function filterNotesById(id) {
+  store.notes = store.notes.filter(note => note.id !== id);
 }
 
 function createRowContent(row, note) {
+  row.dataset.id = note.id;
+
   Object.keys(note)
     .filter((key) => key !== 'id')
     .forEach((key) => {
@@ -59,63 +71,6 @@ function createRow() {
   return row;
 };
 
-function createCell(value) {
-  const cell = document.createElement('td');
-  cell.className = 'cell note__cell';
-
-  if (value) {
-    cell.textContent = value;
-  }
-  
-  return cell;
-};
-
-function createCellWithText(value) {
-  const cell = createCell();
-  cell.innerHTML = `
-    <p class="cell__text">
-      ${value}
-    </p>
-  `;
-
-  return cell;
-};
-
-function createTitleCell(note) {
-  const cell = createCell();
-  cell.classList.add('cell--is-darken');
-  
-  const title = document.createElement('h3');
-  title.className = 'cell__title';
-  title.textContent = note.name;
-
-  const iconBox = document.createElement('span');
-  iconBox.className = 'icon-wrapper cell__icon-wrapper';
-
-  const icon = document.createElement('span');
-  icon.className = `icon icon--${categories[note.category]}`;
-  icon.style.cursor = 'auto';
-  icon.textContent = note.category;
-
-  iconBox.appendChild(icon);
-  cell.append(iconBox, title);
-
-  return cell;
-};
-
-function filterNotesById(id) {
-  store.notes = store.notes.filter(note => note.id !== id);
-}
-
-function updateTables() {
-  const filteredNotes = tableBody.dataset.active === 'true' 
-    ? store.notes.filter(item => !item.isArchived)
-    : store.notes.filter(item => item.isArchived);
-
-  tableBody.innerHTML = '';
-  filteredNotes.forEach(render);
-}
-
 function createCellWithButtons(note) {
   const { isArchived } = note;
 
@@ -126,12 +81,18 @@ function createCellWithButtons(note) {
   const deleteButton = createButton();
   const archiveButton = createButton();
 
+  editButton.id = 'note-edit-button';
   editButton.classList.add('icon--edit');
+
+  deleteButton.id = 'note-delete-button';
   deleteButton.classList.add('icon--delete');
+
+  archiveButton.id = 'note-archive-button';
   archiveButton.classList.add(`icon--${isArchived ? 'unarchive' : 'archive'}`);
 
-  // editButton.addEventListener('click', () => {
-  // });
+  editButton.addEventListener('click', () => {
+    editNote(note);
+  });
 
   deleteButton.addEventListener('click', () => {
     filterNotesById(note.id);
@@ -148,12 +109,68 @@ function createCellWithButtons(note) {
   return cell;
 };
 
-function createButton() {
-  const button = document.createElement('button');
-  button.className = 'icon cell__icon';
-  button.type = 'button';
+function render(note) {
+  const row = createRow();
+  createRowContent(row, note);
 
-  return button;
+  tableBody.append(row);
+};
+
+function initTable() {
+  notes.forEach(render);
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  form.dataset.type === 'edit'
+  ? updateStore(+form.dataset.edited)
+  : createNewNote(name.value, category.value, content.value);
+
+  updateTables();
+  form.reset();
+  form.classList.remove('form--is-visible');
+})
+
+function updateStore(id) {
+  const note = store.notes.find(note => note.id === id);
+  note.name = name.value;
+  note.category = category.value;
+  note.content = content.value;
+  note.dates = getDates(note.content);
+}
+
+function createNewNote (name, category, content) {
+  form.dataset.type = 'create';
+  form.dataset.edited = '0';
+
+  const options = { month: 'long', year: 'numeric', day: '2-digit' };
+  const note = {
+    id: Date.now(),
+    name,
+    created: new Date().toLocaleDateString("en-US", options),
+    category,
+    content,
+    dates: getDates(content),
+    isArchived: false,
+  }
+
+  store.notes = [...store.notes, note];
+};
+
+function editNote(note) {
+  form.dataset.edited = note.id;
+  form.dataset.type = 'edit';
+  form.classList.add('form--is-visible');
+
+  name.value = note.name;
+  category.value = note.category;
+  content.value = note.content;
+}
+
+function getDates(content) {
+  const reg = /(0?[1-9]|[12]\d|30|31)[^\w\d\r\n:](0?[1-9]|1[0-2])[^\w\d\r\n:](\d{4}|\d{2})/g;
+  return content.match(reg)?.join(', ')
 };
 
 initTable();

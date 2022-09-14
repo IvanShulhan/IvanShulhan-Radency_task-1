@@ -11,6 +11,59 @@
 <body>
   <main class="main">
     <div class="main__content">
+      <form 
+        class="form main__form" 
+        id="form" 
+        data-type="create"
+      >
+        <h3 class="form__title">Create note form</h3>
+        <label for="name" class="form__label">
+          <h4 class="form__label-title">Name</h4>
+          <input 
+            type="text" 
+            class="form__input form__input--input" 
+            placeholder="Enter a title" 
+            id="name" 
+            required
+          >
+        </label>
+        <label for="category" class="form__label">
+          <h4 class="form__label-title">Category</h4>
+          <select 
+            type="text" 
+            class="form__input form__input--select" 
+            id="category" 
+          >
+          <option value="Task">Task</option>
+          <option value="Idea">Idea</option>
+          <option value="Random thought">Random thought</option>
+          <option value="Quote">Quote</option>
+          </select>
+        </label>
+        <label for="content" class="form__label">
+          <h4 class="form__label-title">Content</h4>
+          <textarea 
+            class="form__input form__input--textarea" 
+            placeholder="Enter a title" 
+            id="content" 
+            required
+          ></textarea>
+        </label>
+        <div class="form__button-block">
+          <button 
+            type="reset" 
+            class="form__button form__button--reset"
+          >
+            Reset
+          </button>
+          <button 
+            class="form__button form__button--submit"
+            id="submit-button"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
       <table class="notes-table main__notes-table">
         <tr class="notes-table__head">
           <th class="cell notes-table__cell cell--is-centered">Name</th>
@@ -35,7 +88,13 @@
         </tr>
         <tbody class="notes-table__body" id="notes-table-body" data-active="true"></tbody>
       </table>
-      <button type="button" class="create-note-button main__create-note-button">Create Note</button>
+      <button 
+        type="button" 
+        class="create-note-button main__create-note-button"
+        id="create"
+      >
+        Create Note
+      </button>
       <!-- <div class="notes-table main__notes-table notes-table--full-width">
         <ul class="notes-table__head">
           <li class="cell notes-table__cell cell--is-centered">Note category</li>

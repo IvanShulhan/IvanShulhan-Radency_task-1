@@ -1,67 +1,53 @@
 import { categories } from './data.js';
 
-export function createForm(note) {
-  const form = document.createElement('form');
-  form.className = 'form main__form';
-  form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      console.log('aaa');
-    })
+export function createCell(value) {
+  const cell = document.createElement('td');
+  cell.className = 'cell note__cell';
 
-  const input = document.createElement('input');
-  input.className = 'form__input form__input--input';
-  input.placeholder = 'Enter a title';
+  if (value) {
+    cell.textContent = value;
+  }
+  
+  return cell;
+};
 
-  const select = document.createElement('select');
-  select.className = 'form__input form__input--select';
-  select.innerHTML = `
-    <option value="0">Chose an option<option>
-    ${Object.keys(categories).map(category => (
-      `<option value=${category}>${category}<option>`
-    )).join('')}
+export function createCellWithText(value) {
+  const cell = createCell();
+  cell.innerHTML = `
+    <p class="cell__text">
+      ${value}
+    </p>
   `;
 
-  const textarea = document.createElement('textarea');
-  textarea.className = 'form__input form__input--textarea';
-  textarea.placeholder = 'Enter a text';
+  return cell;
+};
+
+export function createTitleCell(note) {
+  const cell = createCell();
+  cell.classList.add('cell--is-darken');
   
-  const labelWithInput = createLabel('Name', input);
-  const labelWithSelect = createLabel('Category', select);
-  const labelWithTextarea = createLabel('Content', textarea);
+  const title = document.createElement('h3');
+  title.className = 'cell__title';
+  title.textContent = note.name;
 
-  const formSubmitButton = createButton('submit');
-  const formResetButton = createButton('reset');
+  const iconBox = document.createElement('span');
+  iconBox.className = 'icon-wrapper cell__icon-wrapper';
 
+  const icon = document.createElement('span');
+  icon.className = `icon icon--${categories[note.category]}`;
+  icon.style.cursor = 'auto';
+  icon.textContent = note.category;
 
-  form.append(
-    labelWithInput, 
-    labelWithSelect, 
-    labelWithTextarea, 
-    formResetButton, 
-    formSubmitButton
-  )
+  iconBox.appendChild(icon);
+  cell.append(iconBox, title);
 
-  return form;
-}
+  return cell;
+};
 
-function createButton(type) {
+export function createButton() {
   const button = document.createElement('button');
-  button.type = type;
-  button.className = `form__button form__button--${type}`;
-  button.innerText = type;
+  button.className = 'icon cell__icon';
+  button.type = 'button';
 
   return button;
-}
-
-function createLabel(title, input) {
-  const label = document.createElement('label');
-  label.className = "form__label";
-
-  label.innerHTML = `
-    <h4 class="form__label-title">${title}</h4>
-  `;
-
-  label.append(input)
-
-  return label;
-}
+};
