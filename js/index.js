@@ -34,7 +34,7 @@ function updateStatisticTableContent() {
 
   Object.keys(categories).forEach((category) => {
     const filtered = store.notes.filter(note => note.category === category)
-    const active = filtered.filter(note => note.isArchived).length || '0';
+    const active = filtered.filter(note => !note.isArchived).length || '0';
     const archive = filtered.length - active || '0';
 
 
@@ -49,8 +49,11 @@ function updateStatisticTableContent() {
   })
 }
 
-
 createNoteButton.addEventListener('click', () => {
+  if (form.classList.contains('form--is-visible')) {
+    form.reset();
+  }
+
   form.classList.toggle('form--is-visible');
 })
 

@@ -6,7 +6,7 @@
 
 .main {
   font-family: Arial, Helvetica, sans-serif;
-  color: #666;
+  color: #555;
   width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -35,7 +35,7 @@
 
 .notes-table__head {
   list-style: none;
-  background-color: #888;
+  background-color: #859cae;
   font-size: 18px;
   font-weight: 700;
   color: #fff;
@@ -85,7 +85,7 @@
 }
 
 .cell--is-darken {
-  color: #444;
+  color: #333;
 }
 
 .cell--is-big {
@@ -166,7 +166,7 @@
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
-  background-color: #eee;
+  background-color: #e4eff6;
 }
 
 .icon-wrapper {
